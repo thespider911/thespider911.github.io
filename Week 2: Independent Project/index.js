@@ -1,7 +1,6 @@
 //get form submitted data
 function submitUserData () {
     console.log('data submitted...')
-    let answer = document.getElementById('result')
     let gender = document.getElementById('gender').value
 
     //date values to an object
@@ -12,27 +11,33 @@ function submitUserData () {
         date: document.getElementById('date').value
     }
 
-    //get birth day
-    const day = getBirthDayOfWeek(dob)
-
-    // if date of the week is valid
-    if (day.status){
-        const result = getChildName(day, gender)
-        if (result.status) {
-            console.log(result)
-            answer.innerHTML = 'Your were born on '+ result.day +' and '+ result.name
-        }else{
-            clearAnswer(result.message)
-        }
+    if (dob.century === '' || dob.year === '' || dob.month === '' || dob.date === '' || gender === '') {
+        clearAnswer('Please fill in the form')
     }else{
-        clearAnswer(result.message)
+        let answer = document.getElementById('result')
+
+        //get birth day
+        const day = getBirthDayOfWeek(dob)
+        // if date of the week is valid
+        if (day.status){
+            const result = getChildName(day, gender)
+            if (result.status) {
+                console.log(result)
+                answer.innerHTML = 'Your were born on '+ result.day +' and '+ result.name
+                document.getElementById('errors').innerHTML = ''
+            }else{
+                clearAnswer(result.message)
+            }
+        }else{
+            clearAnswer(day.message)
+        }
     }
 }
 
 //clear answer and throw error
 function clearAnswer(message) {
     document.getElementById('result').innerHTML  = 'Your answer :'
-    alert(message)
+    document.getElementById('errors').innerHTML  = message
 }
 
 // get the birth day 1 being Sunday and 7 being Saturday
