@@ -8,7 +8,13 @@ Nathan Mbicho
 
 ## Setup Instructions
 1. Clone this repository to your local machine.
+```
+git clone git@github.com:thespider911/thespider911.github.io.git
+```
 2. Navigate to the project directory.
+```
+Week 2: Independent Project
+```
 3. Open the `index.html` file in your web browser.
 
 ## Behavior Driven Development (BDD)
@@ -29,7 +35,7 @@ Nathan Mbicho
 - Birthday input form
 - Gender selection
 - Akan name calculation based on birthday and gender
-- Input validation for date and month
+- Input validation for date, month and gender
 
 ## Live Site
 [Live Site][https://thespider911.github.io/Week%202:%20Independent%20Project]
