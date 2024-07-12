@@ -1,6 +1,7 @@
 //get form submitted data
 function submitUserData () {
-    let answer = document.getElementById('result').innerHTML
+    console.log('data submitted...')
+    let answer = document.getElementById('result')
     let gender = document.getElementById('gender').value
 
     //date values to an object
@@ -18,15 +19,20 @@ function submitUserData () {
     if (day.status){
         const result = getChildName(day, gender)
         if (result.status) {
-            answer = 'Your were born on '+ result.day +' and '+ result.name
+            console.log(result)
+            answer.innerHTML = 'Your were born on '+ result.day +' and '+ result.name
         }else{
-            alert(result.message)
-            answer = 'Your answer :'
+            clearAnswer(result.message)
         }
     }else{
-        alert(day.message)
-        answer = 'Your answer :'
+        clearAnswer(result.message)
     }
+}
+
+//clear answer and throw error
+function clearAnswer(message) {
+    document.getElementById('result').innerHTML  = 'Your answer :'
+    alert(message)
 }
 
 // get the birth day 1 being Sunday and 7 being Saturday
