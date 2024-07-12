@@ -38,7 +38,7 @@ Week 2: Independent Project
 - Input validation for date, month and gender
 
 ## Live Site
-[Live Site][https://thespider911.github.io/Week%202:%20Independent%20Project]
+[Live Site](https://thespider911.github.io/Week%202:%20Independent%20Project) [ https://thespider911.github.io/Week%202:%20Independent%20Project ]
 
 ## Akan Names Reference
 ### Male
