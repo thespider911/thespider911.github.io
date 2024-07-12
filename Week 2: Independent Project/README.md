@@ -11,10 +11,6 @@ Nathan Mbicho
 2. Navigate to the project directory.
 3. Open the `index.html` file in your web browser.
 
--- or --
-
-1. Open this URL
-
 ## Behavior Driven Development (BDD)
 1. User sees a description of the application on the landing page.
 2. User enters their birthday through a form.
@@ -36,7 +32,7 @@ Nathan Mbicho
 - Input validation for date and month
 
 ## Live Site
-[URL to the deployed site on GitHub Pages]
+[Live Site][https://thespider911.github.io/Week%202:%20Independent%20Project]
 
 ## Akan Names Reference
 ### Male
