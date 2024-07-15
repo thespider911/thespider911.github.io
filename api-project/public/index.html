@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bikes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <h5 style="text-align: center; font-size: 1.3em;">Bikes Api</h5>
+        </div>
+        <hr/>
+        <div>
+            <button onclick="getAllBikes()">All Bikes</button>
+            <button onclick="getMyProfile()">My Profile</button>
+        </div>
+        <hr/>
+        <p id="loading"></p>
+        <div id="bikesList">
+            Welcome to Bikes API
+        </div>
+
+        <div id="profileList">
+        </div>
+    </div>
+    <script src="service.js"></script>
+</body>
+</html>
