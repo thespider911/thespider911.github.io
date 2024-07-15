@@ -1,10 +1,8 @@
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-const API_URL = 'https://bikeindex.org/api/v3';
+const API_URL = `http://localhost:3000`;
 
-// fetch data
 async function fetchData(url) {
     try {
-        const response = await fetch(CORS_PROXY + url);
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -15,34 +13,33 @@ async function fetchData(url) {
     }
 }
 
-// all bikes
 async function getAllBikes() {
-    clearBikeListData();
-    clearProfileData();
+    clearBikeListData()
+    clearProfileData()
 
-    document.getElementById('loading').innerHTML = 'Loading bike list....';
-    const data = await fetchData(`${API_URL}/search`);
-    if (data && data.bikes) {
-        displayBikes(data.bikes);
-        document.getElementById('loading').innerHTML = '';
-    } else {
-        displayError('Failed to fetch bikes data');
-    }
+        document.getElementById('loading').innerHTML = 'Loading bike list....'
+        const data = await fetchData(`${API_URL}/api/all-bikes`);
+        if (data && data.bikes) {
+            displayBikes(data.bikes);
+            document.getElementById('loading').innerHTML = ''
+        } else {
+            displayError('Failed to fetch bikes data');
+        }
 }
 
-// single bike
 async function getSingleBike(id) {
-    clearBikeListData();
-    clearProfileData();
+    clearBikeListData()
+    clearProfileData()
 
-    document.getElementById('loading').innerHTML = 'Loading bike list....';
-    const data = await fetchData(`${API_URL}/bikes/${id}`);
-    if (data && data.bike) {
-        displayBikes([data.bike]);
-        document.getElementById('loading').innerHTML = '';
-    } else {
-        displayError('Failed to fetch bike data');
-    }
+        document.getElementById('loading').innerHTML = 'Loading bike list....'
+        const data = await fetchData(`${API_URL}/api/bike/${id}`);
+        console.log(data)
+        if (data && data.bikes) {
+            displayBikes(data.bikes);
+            document.getElementById('loading').innerHTML = ''
+        } else {
+            displayError('Failed to fetch bikes data');
+        }
 }
 
 async function getMyProfile() {
@@ -50,7 +47,7 @@ async function getMyProfile() {
     clearProfileData()
 
     document.getElementById('loading').innerHTML = 'Loading profile....'
-    const data = await fetchData(`${API_URL}/me?access_token=${process.env.BIKE_INDEX_API_KEY}`);
+    const data = await fetchData(`${API_URL}/api/my-profile`);
     if (data) {
         document.getElementById('profileList').innerHTML = `
         <ul>
@@ -62,7 +59,7 @@ async function getMyProfile() {
 
             document.getElementById('loading').innerHTML = ''
         } else {
-            displayError('Failed to fetch your bikes data');
+            displayError('Api token has expired!');
         }
 }
 
@@ -90,11 +87,11 @@ function displayBikes(bikes) {
         bikes.forEach(bike => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${bike.title || 'N/A'}</td>
-                <td>${bike.manufacturer_name || 'N/A'}</td>
-                <td>${bike.frame_model || 'N/A'}</td>
+                <td>${bike.title || '--'}</td>
+                <td>${bike.manufacturer_name || '--'}</td>
+                <td>${bike.frame_model || '--'}</td>
                 <td>${bike.frame_colors ? bike.frame_colors.join(', ') : 'N/A'}</td>
-                <td>${bike.year || 'N/A'}</td>
+                <td>${bike.year}</td>
                 <td><a href='${bike.url}' target='_blank'>view</a></td>
             `;
             tbody.appendChild(tr);
@@ -124,13 +121,3 @@ function displayError(message) {
     const bikesList = document.getElementById('bikesList');
     bikesList.innerHTML = `<p style="color: red;">${message}</p>`;
 }
-
-
-// get data on load
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('allBikesBtn').addEventListener('click', getAllBikes);
-    document.getElementById('singleBikeBtn').addEventListener('click', () => {
-        const bikeId = prompt('Enter bike ID:');
-        if (bikeId) getSingleBike(bikeId);
-    });
-});

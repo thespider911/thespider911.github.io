@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bike Index</title>
+    <title>Bikes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="main">
         <div class="header">
-            <h1>Bike API</h1>
+            <h5 style="text-align: center; font-size: 1.3em;">Bikes Api</h5>
         </div>
+        <hr/>
         <div>
-            <button id="allBikesBtn">Get All Bikes</button>
-            <button id="singleBikeBtn">Get Single Bike</button>
-            <button id="getMyProfile">My Profile</button>
+            <button onclick="getAllBikes()">All Bikes</button>
+            <button onclick="getMyProfile()">My Profile</button>
         </div>
-        <div id="loading"></div>
+        <hr/>
+        <p id="loading"></p>
         <div id="bikesList"></div>
         <div id="profileList"></div>
     </div>
