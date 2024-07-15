@@ -14,9 +14,10 @@ Nathan Mbicho
 git clone git@github.com:thespider911/thespider911.github.io.git
 ``
 2. Navigate to the project directory `api-project`
-3. Install node modules using  `npm install`
-4. Start server by running `npm run dev`
-5. Once the server is running open `your_path/public/index.html`
+3. Create `.env` file on your root project and add `PORT:3000`, and `BIKE_INDEX_API_KEY:your_key` which is your bike account api key
+4. Install node modules using  `npm install`
+5. Start server by running `npm run dev`
+6. Once the server is running open `your_path/public/index.html`
 
 ## Technologies Used
 - HTML
