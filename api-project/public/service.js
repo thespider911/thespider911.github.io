@@ -1,5 +1,23 @@
 const API_URL = `https://bikeindex.org/api/v3`;
 
+async function fetchBikesData(url) {
+    try {
+        const headers = { 'Content-Type': 'application/json' };
+        const response = await fetch(url, { headers });
+        const body = await response.json();
+        if (response.ok) {
+            console.log('Success');
+            return { status: true, data: body };
+        } else {
+            console.log('Oops! Something went wrong!');
+            return { status: false };
+        }
+    } catch (error) {
+        console.error(error);
+        return { status: false, error: error };
+    }
+}
+
 async function fetchData(url) {
     try {
         const response = await fetchBikesData(url);
@@ -32,7 +50,7 @@ async function getSingleBike(id) {
     clearProfileData()
 
         document.getElementById('loading').innerHTML = 'Loading bike list....'
-        const data = await fetchData(`${API_URL}/bikes/${req.params.id}`);
+        const data = await fetchData(`${API_URL}/bikes/${id}`);
         console.log(data)
         if (data && data.bikes) {
             displayBikes(data.bikes);
