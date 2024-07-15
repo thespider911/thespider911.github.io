@@ -1,42 +1,10 @@
-import express from 'express';
-import 'dotenv/config';
-import fetch from 'node-fetch';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import cors from 'cors';
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+const API_URL = 'https://bikeindex.org/api/v3';
 
-const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Middleware to parse JSON request body
-app.use(express.json());
-app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
-
-const API_URL = `https://bikeindex.org/api/v3`;
-
-async function fetchBikesData(url) {
-    try {
-        const headers = { 'Content-Type': 'application/json' };
-        const response = await fetch(url, { headers });
-        const body = await response.json();
-        if (response.ok) {
-            console.log('Success');
-            return { status: true, data: body };
-        } else {
-            console.log('Oops! Something went wrong!');
-            return { status: false };
-        }
-    } catch (error) {
-        console.error(error);
-        return { status: false, error: error };
-    }
-}
-
+// fetch data
 async function fetchData(url) {
     try {
-        const response = await fetchBikesData(url);
+        const response = await fetch(CORS_PROXY + url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -47,33 +15,34 @@ async function fetchData(url) {
     }
 }
 
+// all bikes
 async function getAllBikes() {
-    clearBikeListData()
-    clearProfileData()
+    clearBikeListData();
+    clearProfileData();
 
-        document.getElementById('loading').innerHTML = 'Loading bike list....'
-        const data = await fetchData(`${API_URL}/search`);
-        if (data && data.bikes) {
-            displayBikes(data.bikes);
-            document.getElementById('loading').innerHTML = ''
-        } else {
-            displayError('Failed to fetch bikes data');
-        }
+    document.getElementById('loading').innerHTML = 'Loading bike list....';
+    const data = await fetchData(`${API_URL}/search`);
+    if (data && data.bikes) {
+        displayBikes(data.bikes);
+        document.getElementById('loading').innerHTML = '';
+    } else {
+        displayError('Failed to fetch bikes data');
+    }
 }
 
+// single bike
 async function getSingleBike(id) {
-    clearBikeListData()
-    clearProfileData()
+    clearBikeListData();
+    clearProfileData();
 
-        document.getElementById('loading').innerHTML = 'Loading bike list....'
-        const data = await fetchData(`${API_URL}/bikes/${id}`);
-        console.log(data)
-        if (data && data.bikes) {
-            displayBikes(data.bikes);
-            document.getElementById('loading').innerHTML = ''
-        } else {
-            displayError('Failed to fetch bikes data');
-        }
+    document.getElementById('loading').innerHTML = 'Loading bike list....';
+    const data = await fetchData(`${API_URL}/bikes/${id}`);
+    if (data && data.bike) {
+        displayBikes([data.bike]);
+        document.getElementById('loading').innerHTML = '';
+    } else {
+        displayError('Failed to fetch bike data');
+    }
 }
 
 async function getMyProfile() {
@@ -106,7 +75,6 @@ function displayBikes(bikes) {
         const thead = document.createElement('thead');
         const tbody = document.createElement('tbody');
 
-        // Add table headers
         thead.innerHTML = `
             <tr>
                 <th>Name</th>
@@ -122,11 +90,11 @@ function displayBikes(bikes) {
         bikes.forEach(bike => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${bike.title}</td>
-                <td>${bike.manufacturer_name}</td>
-                <td>${bike.frame_model}</td>
-                <td>${bike.frame_colors}</td>
-                <td>${bike.year}</td>
+                <td>${bike.title || 'N/A'}</td>
+                <td>${bike.manufacturer_name || 'N/A'}</td>
+                <td>${bike.frame_model || 'N/A'}</td>
+                <td>${bike.frame_colors ? bike.frame_colors.join(', ') : 'N/A'}</td>
+                <td>${bike.year || 'N/A'}</td>
                 <td><a href='${bike.url}' target='_blank'>view</a></td>
             `;
             tbody.appendChild(tr);
@@ -139,16 +107,30 @@ function displayBikes(bikes) {
     }
 }
 
-function clearBikeListData () {
+// clear bike list data
+function clearBikeListData() {
     const bikesList = document.getElementById('bikesList');
     bikesList.innerHTML = '';
 }
 
-function clearProfileData () {
+// clear ptofile data
+function clearProfileData() {
     document.getElementById('profileList').innerHTML = '';
 }
 
+
+// display errors
 function displayError(message) {
     const bikesList = document.getElementById('bikesList');
     bikesList.innerHTML = `<p style="color: red;">${message}</p>`;
 }
+
+
+// get data on load
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('allBikesBtn').addEventListener('click', getAllBikes);
+    document.getElementById('singleBikeBtn').addEventListener('click', () => {
+        const bikeId = prompt('Enter bike ID:');
+        if (bikeId) getSingleBike(bikeId);
+    });
+});

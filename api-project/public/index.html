@@ -2,27 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bikes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Index</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="main">
         <div class="header">
-            <h5 style="text-align: center; font-size: 1.3em;">Bikes Api</h5>
+            <h1>Bike API</h1>
         </div>
-        <hr/>
         <div>
-            <button onclick="getAllBikes()">All Bikes</button>
-            <button onclick="getMyProfile()">My Profile</button>
+            <button id="allBikesBtn">Get All Bikes</button>
+            <button id="singleBikeBtn">Get Single Bike</button>
+            <button id="getMyProfile">My Profile</button>
         </div>
-        <hr/>
-        <p id="loading"></p>
-        <div id="bikesList">
-            Welcome to Bikes API
-        </div>
-
-        <div id="profileList">
-        </div>
+        <div id="loading"></div>
+        <div id="bikesList"></div>
+        <div id="profileList"></div>
     </div>
     <script src="service.js"></script>
 </body>
