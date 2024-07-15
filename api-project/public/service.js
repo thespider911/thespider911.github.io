@@ -1,3 +1,19 @@
+import express from 'express';
+import 'dotenv/config';
+import fetch from 'node-fetch';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Middleware to parse JSON request body
+app.use(express.json());
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
+
 const API_URL = `https://bikeindex.org/api/v3`;
 
 async function fetchBikesData(url) {
