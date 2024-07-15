@@ -1,8 +1,8 @@
-const API_URL = `http://localhost:3000`;
+const API_URL = `https://bikeindex.org/api/v3`;
 
 async function fetchData(url) {
     try {
-        const response = await fetch(url);
+        const response = await fetchBikesData(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -18,7 +18,7 @@ async function getAllBikes() {
     clearProfileData()
 
         document.getElementById('loading').innerHTML = 'Loading bike list....'
-        const data = await fetchData(`${API_URL}/api/all-bikes`);
+        const data = await fetchData(`${API_URL}/search`);
         if (data && data.bikes) {
             displayBikes(data.bikes);
             document.getElementById('loading').innerHTML = ''
@@ -32,7 +32,7 @@ async function getSingleBike(id) {
     clearProfileData()
 
         document.getElementById('loading').innerHTML = 'Loading bike list....'
-        const data = await fetchData(`${API_URL}/api/bike/${id}`);
+        const data = await fetchData(`${API_URL}/bikes/${req.params.id}`);
         console.log(data)
         if (data && data.bikes) {
             displayBikes(data.bikes);
@@ -47,7 +47,7 @@ async function getMyProfile() {
     clearProfileData()
 
     document.getElementById('loading').innerHTML = 'Loading profile....'
-    const data = await fetchData(`${API_URL}/api/my-profile`);
+    const data = await fetchData(`${API_URL}/me?access_token=${process.env.BIKE_INDEX_API_KEY}`);
     if (data) {
         document.getElementById('profileList').innerHTML = `
         <ul>
