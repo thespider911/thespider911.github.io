@@ -1,0 +1,21 @@
+{
+  "name": "functional-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "keywords": [
+    "functional",
+    "roman",
+    "prime",
+    "counter",
+    "test"
+  ],
+  "author": "nathan mbicho",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
